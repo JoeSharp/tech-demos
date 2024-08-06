@@ -1,8 +1,8 @@
-rm montague/*
+rm montague/*.*
 rm montague/romeo/*
 rm montague/tybalt/*
 
-# Creating Montague CA
+echo "Creating Montague CA"
 openssl req \
 -x509 \
 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 \
@@ -12,17 +12,17 @@ openssl req \
 -keyout montague/montague.key \
 -subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=montague"
 
-# Creating Romeo
+echo "Creating Romeo"
 openssl genrsa -out montague/romeo/romeo.key 4096
 openssl rsa -in montague/romeo/romeo.key -pubout -out montague/romeo/romeo.pub.key
 
-# Create Romeo CSR
+echo "Create Romeo CSR"
 openssl req \
 -new -key montague/romeo/romeo.key \
 -out montague/romeo/romeo.csr \
 -subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=romeo.com"
 
-# Signing Romeo CSR
+echo "Signing Romeo CSR"
 cat > montague/romeo/romeo.ext << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
@@ -44,11 +44,11 @@ openssl x509 \
 -sha256 \
 -extfile montague/romeo/romeo.ext
 
-# Creating Tybalt
+echo "Creating Tybalt"
 openssl genrsa -out montague/tybalt/tybalt.key 4096
 openssl rsa -in montague/tybalt/tybalt.key -pubout -out montague/tybalt/tybalt.pub.key
 
-# This extra file is required by Firefox as the client cert
+echo "This extra file is required by Firefox as the client cert"
 openssl pkcs12 -export \
 -in montague/tybalt/tybalt.crt \
 -inkey montague/tybalt/tybalt.key \
@@ -56,13 +56,13 @@ openssl pkcs12 -export \
 -out montague/tybalt/tybalt.p12 \
 -passout pass:changeit
 
-# Create Tybalt CSR
+echo "Create Tybalt CSR"
 openssl req \
 -new -key montague/tybalt/tybalt.key \
 -out montague/tybalt/tybalt.csr \
 -subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=tybalt.com"
 
-# Signing Tybalt CSR
+echo "Generating Tybalt CSR"
 cat > montague/tybalt/tybalt.ext << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
@@ -74,6 +74,7 @@ DNS.2 = tybalt.com
 IP.1 = 127.0.0.1
 EOF
 
+echo "Signing Tybalt CSR"
 openssl x509 \
 -req -in montague/tybalt/tybalt.csr \
 -CA montague/montague.crt \
