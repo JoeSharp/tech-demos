@@ -1,0 +1,31 @@
+server:
+  port: 8061
+  ssl:
+    bundle: 'montague'
+    client-auth: NEED
+
+spring:
+  application.name: ssl-demo
+  ssl:
+    bundle:
+      pem:
+        montague:
+          key:
+            alias: example-service
+          keystore:
+            privateKey: ${CERTS_DIR:./local}/montague/tybalt/tybalt.key
+            certificate: ${CERTS_DIR:./local}/montague/tybalt/tybalt.crt
+          truststore:
+            certificate: ${CERTS_DIR:./local}/montague/montague.crt
+        capulet:
+          key:
+            alias: example-service
+          keystore:
+            privateKey: ${CERTS_DIR:./local}/capulet/the-nurse/the-nurse.key
+            certificate: ${CERTS_DIR:./local}/capulet/the-nurse/the-nurse.crt
+          truststore:
+            certificate: ${CERTS_DIR:./local}/capulet/capulet.crt
+
+external:
+  montague-url: ${ROMEO_URL:https://romeo.com:10443}
+  capulet-url: ${JULIET_URL:https://juliet.com:19443}
