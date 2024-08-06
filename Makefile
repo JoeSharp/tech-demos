@@ -15,8 +15,8 @@ build-app:
 
 refresh-certs:
 	cd local && \
-	./local/create-capulet-ssl-files.sh \
-	./local/create-montague-ssl-files.sh \
+	./create-capulet-ssl-files.sh \
+	./create-montague-ssl-files.sh \
 	cd ..
 
 run-test:
