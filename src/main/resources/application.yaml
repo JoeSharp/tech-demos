@@ -27,5 +27,5 @@ spring:
             certificate: ${CERTS_DIR:./local}/capulet/capulet.crt
 
 external:
-  montague-url: ${ROMEO_URL:https://romeo.com:10443}
-  capulet-url: ${JULIET_URL:https://juliet.com:19443}
+  montague-url: ${ROMEO_URL:https://localhost:10443}
+  capulet-url: ${JULIET_URL:https://localhost:19443}

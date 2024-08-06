@@ -60,6 +60,17 @@ It should then be possible to visit
 
 `**` Firefox will require you to present a cert
 
+## Unit Testing
+
+This project also demonstrates the use of test containers and wiremock for 
+setting up external dependencies.
+
+To run the tests, you can use the usual gradle task
+
+```bash
+./gradlew test
+```
+
 ## Regenerating files
 The following command can be used to regenerate all the certs and keys
 
