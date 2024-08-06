@@ -8,18 +8,18 @@ spring:
   application.name: ssl-demo
   ssl:
     bundle:
-      pem:
+      jks:
         montague:
           key:
-            alias: example-service
+            alias: tybalt
           keystore:
-            privateKey: ./local/montague/tybalt/tybalt.key
-            certificate: ./local/montague/tybalt/tybalt.crt
+            location: ./local/montague/tybalt/tybalt.keystore.jks
+            password: changeit
           truststore:
-            certificate: ./local/montague/montague.crt
+            location: ./local/montague/montague.truststore.jks
+            password: changeit
+      pem:
         capulet:
-          key:
-            alias: example-service
           keystore:
             privateKey: ./local/capulet/the-nurse/the-nurse.key
             certificate: ./local/capulet/the-nurse/the-nurse.crt
