@@ -1,3 +1,7 @@
+rm montague/*
+rm montague/romeo/*
+rm montague/tybalt/*
+
 # Creating Montague CA
 openssl req \
 -x509 \

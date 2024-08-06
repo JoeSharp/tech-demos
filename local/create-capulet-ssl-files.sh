@@ -1,3 +1,7 @@
+rm capulet/*
+rm capulet/juliet/*
+rm capulet/the-nurse/*
+
 # Creating Capulet CA
 openssl req \
 -x509 \
