@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: star-trek
+  labels:
+    app: star-trek
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: star-trek
+  template:
+    metadata:
+      labels:
+        app: star-trek
+    spec:
+      containers:
+      - name: kirk
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: picard
+        image: alpine:latest
+        command: ["tail"]
+        args: ["-f", "/dev/null"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: star-trek
+spec:
+  type: LoadBalancer
+  selector:
+    app: star-trek
+  ports:
+    - protocol: TCP
+      port: 9080
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: star-trek-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /trek
+        pathType: Prefix
+        backend:
+          service:
+            name: star-trek
+            port:
+              number: 9080
+---

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: red-dwarf
+  labels:
+    app: red-dwarf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: red-dwarf
+  template:
+    metadata:
+      labels:
+        app: red-dwarf
+    spec:
+      containers:
+      - name: lister
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: rimmer
+        image: alpine:latest
+        command: ["tail"]
+        args: ["-f", "/dev/null"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: red-dwarf
+spec:
+  type: LoadBalancer
+  selector:
+    app: red-dwarf
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: red-dwarf-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /dwarf
+        pathType: Prefix
+        backend:
+          service:
+            name: red-dwarf
+            port:
+              number: 8080
+---
