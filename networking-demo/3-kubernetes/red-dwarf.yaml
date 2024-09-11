@@ -45,8 +45,8 @@ spec:
   rules:
   - http:
       paths:
-      - path: /dwarf
-        pathType: Prefix
+      - pathType: Prefix
+        path: /
         backend:
           service:
             name: red-dwarf
