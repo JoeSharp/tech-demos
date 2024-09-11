@@ -1,0 +1,36 @@
+services:
+  lister:
+    image: nginx
+    container_name: lister
+    networks: 
+      - red-dwarf
+    volumes:
+      - ../common/lister.html:/usr/share/nginx/html/index.html
+  rimmer:
+    image: alpine:latest
+    container_name: rimmer
+    networks: 
+      - red-dwarf
+    command: tail -f /dev/null
+  kirk:
+    image: nginx
+    container_name: kirk
+    networks: 
+      - star-trek
+    volumes:
+      - ../common/kirk.html:/usr/share/nginx/html/index.html
+  picard:
+    image: alpine:latest
+    container_name: picard
+    networks: 
+      - star-trek
+    command: tail -f /dev/null
+
+networks:
+  red-dwarf:
+    name: red-dwarf
+    driver: bridge
+  star-trek:
+    name: star-trek
+    driver: bridge
+    
