@@ -7,5 +7,5 @@ services:
         volumes:
             - ./nginx/alice.html:/usr/share/nginx/html/index.html
             - ./nginx/alice.conf:/etc/nginx/conf.d/default.conf
-            - ./alice.crt:/etc/ssl/certs/nginx/alice.crt
-            - ./alice.key:/etc/ssl/certs/nginx/alice.key
+            - ../temp/alice/alice.crt:/etc/ssl/certs/nginx/alice.crt
+            - ../temp/alice/alice.key:/etc/ssl/certs/nginx/alice.key

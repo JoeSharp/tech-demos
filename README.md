@@ -8,6 +8,11 @@ The intent is to provide runnable demos which allow people to explore topics in 
 
 Most of these have been used to setup local development stacks, rather than provide a frame of reference for production ready platforms.
 
+## rsa-demo
+Provides commands for generating key pairs, custom certificate authorities, signing certs and then encrypting & signing messages for decryption & verification.
+
+This would be a good pre-requisite for the ssl-demo.
+
 ## ssl-demo
 
 This explores how to setup SSL in a spring boot app, but it also provides scripts and examples of setting up nginx.
