@@ -1,5 +1,5 @@
 LGREEN='\033[1;32m'
-RED='\033[0;31m'
+LRED='\033[0;31m'
 NC='\033[0m' # No Color
 
 APP_HOST=localhost:8061
@@ -29,6 +29,13 @@ curl \
   --request GET \
   --cert ./capulet/the-nurse/the-nurse.crt \
   --key ./capulet/the-nurse/the-nurse.key \
+  --cacert ./capulet/capulet.crt \
+  https://${CAPULET_HOST}
+echo ""
+
+echo "${LRED}Requesting Capulet from NGINX without client cert${NC}"
+curl \
+  --request GET \
   --cacert ./capulet/capulet.crt \
   https://${CAPULET_HOST}
 echo ""

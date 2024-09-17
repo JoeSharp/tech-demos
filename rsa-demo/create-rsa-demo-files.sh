@@ -4,7 +4,8 @@ rm -rf $TEMP_DIR/*
 mkdir $TEMP_DIR/alice
 mkdir $TEMP_DIR/bob
 mkdir $TEMP_DIR/charlie
-mkdir $TEMP_DIR/trustable
+mkdir $TEMP_DIR/trustable-tom
+mkdir $TEMP_DIR/message-demo
 
 echo "alice - Generating Key Pair"
 openssl genrsa -out $TEMP_DIR/alice/alice.key 4096
@@ -14,7 +15,6 @@ echo "bob - Generating Key Pair"
 openssl genrsa -out $TEMP_DIR/bob/bob.key 4096
 openssl rsa -in $TEMP_DIR/bob/bob.key -pubout -out $TEMP_DIR/bob/bob.pub.key
 
-mkdir $TEMP_DIR/message-demo
 echo "alice - Creating Encrypted Message"
 echo "Hello from alice 8981" > $TEMP_DIR/message-demo/plain.txt
 
@@ -45,15 +45,15 @@ openssl pkeyutl -decrypt \
 echo "Printing Message"
 cat $TEMP_DIR/message-demo/received.txt
 
-echo "The Boss - Creating a Certificate Authority"
-echo "Will ask for a Password for The Boss..."
+echo "Trustable Tom - Creating a Certificate Authority"
+echo "Will ask for a Password for Trustable Tom..."
 openssl req \
 	-x509 \
 	-newkey ec -pkeyopt ec_paramgen_curve:prime256v1 \
 	-new -sha256 -days 1825 \
-	-out $TEMP_DIR/trustable/trustable.crt \
-	-keyout $TEMP_DIR/trustable/trustable.key \
-	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=trustable.com"
+	-out $TEMP_DIR/trustable-tom/trustable-tom.crt \
+	-keyout $TEMP_DIR/trustable-tom/trustable-tom.key \
+	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=trustable-tom.com"
 
 echo "alice - Creating a Certificate Signing Request (CSR)"
 openssl req \
@@ -61,7 +61,7 @@ openssl req \
 	-out $TEMP_DIR/alice/alice.csr \
 	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=alice.com"
 
-echo "The Boss - Constructing a Config for alice Cert"
+echo "Trustable Tom - Constructing a Config for alice Cert"
 cat > $TEMP_DIR/alice/alice.ext << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
@@ -73,12 +73,12 @@ DNS.2 = alice.com
 IP.1 = 127.0.0.1
 EOF
 
-echo "The Boss - Signing the CSR for alice"
-echo "Will ask for The Boss Password..."
+echo "Trustable Tom - Signing the CSR for alice"
+echo "Will ask for Trustable Tom Password..."
 openssl x509 \
 	-req -in $TEMP_DIR/alice/alice.csr \
-	-CA $TEMP_DIR/trustable/trustable.crt \
-	-CAkey $TEMP_DIR/trustable/trustable.key \
+	-CA $TEMP_DIR/trustable-tom/trustable-tom.crt \
+	-CAkey $TEMP_DIR/trustable-tom/trustable-tom.key \
 	-CAcreateserial \
 	-out $TEMP_DIR/alice/alice.crt \
 	-days 365 -sha256 \
@@ -90,7 +90,7 @@ openssl req \
 	-out $TEMP_DIR/bob/bob.csr \
 	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=bob.com"
 
-echo "The Boss - Constructing a Config for bob Cert"
+echo "Trustable Tom - Constructing a Config for bob Cert"
 cat > $TEMP_DIR/bob/bob.ext << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
@@ -102,12 +102,12 @@ DNS.2 = bob.com
 IP.1 = 127.0.0.1
 EOF
 
-echo "The Boss - Signing the CSR for bob"
-echo "Will ask for The Boss Password..."
+echo "Trustable Tom - Signing the CSR for bob"
+echo "Will ask for Trustable Tom Password..."
 openssl x509 \
 	-req -in $TEMP_DIR/bob/bob.csr \
-	-CA $TEMP_DIR/trustable/trustable.crt \
-	-CAkey $TEMP_DIR/trustable/trustable.key \
+	-CA $TEMP_DIR/trustable-tom/trustable-tom.crt \
+	-CAkey $TEMP_DIR/trustable-tom/trustable-tom.key \
 	-CAcreateserial \
 	-out $TEMP_DIR/bob/bob.crt \
 	-days 365 -sha256 \
@@ -124,7 +124,7 @@ openssl req \
 	-out $TEMP_DIR/charlie/charlie.csr \
 	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=charlie.com"
 
-echo "The Boss - Constructing a Config for charlie Cert"
+echo "Trustable Tom - Constructing a Config for charlie Cert"
 cat > $TEMP_DIR/charlie/charlie.ext << EOF
 authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
@@ -136,12 +136,12 @@ DNS.2 = charlie.com
 IP.1 = 127.0.0.1
 EOF
 
-echo "The Boss - Signing the CSR for charlie"
-echo "Will ask for The Boss Password..."
+echo "Trustable Tom - Signing the CSR for charlie"
+echo "Will ask for Trustable Tom Password..."
 openssl x509 \
 	-req -in $TEMP_DIR/charlie/charlie.csr \
-	-CA $TEMP_DIR/trustable/trustable.crt \
-	-CAkey $TEMP_DIR/trustable/trustable.key \
+	-CA $TEMP_DIR/trustable-tom/trustable-tom.crt \
+	-CAkey $TEMP_DIR/trustable-tom/trustable-tom.key \
 	-CAcreateserial \
 	-out $TEMP_DIR/charlie/charlie.crt \
 	-days 365 -sha256 \
