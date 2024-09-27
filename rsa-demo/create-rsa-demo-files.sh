@@ -148,7 +148,8 @@ openssl x509 \
 	-extfile $TEMP_DIR/charlie/charlie.ext
 
 echo "Exporting Charlie Cert and Key to PKCS12"
-openssl pkcs12 -export \
+# Legacy flag required on the mac
+openssl pkcs12 -export --legacy \
 	-in $TEMP_DIR/charlie/charlie.crt \
 	-inkey $TEMP_DIR/charlie/charlie.key \
 	-name charlie \
