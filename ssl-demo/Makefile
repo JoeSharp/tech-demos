@@ -11,7 +11,7 @@ run-bootrun: run-nginx
 	./gradlew clean bootrun
 
 build-docker-image: build-app
-	docker build -t ssl-demo:latest .
+	docker build --platform=linux/amd64 -t ssl-demo:latest .
 
 build-app:
 	./gradlew clean build
