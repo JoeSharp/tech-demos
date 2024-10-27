@@ -9,16 +9,16 @@ services:
             - include-app
         environment:
             CERTS_DIR: /opt/certs
-            ROMEO_URL: https://romeo.com
-            JULIET_URL: https://juliet.com
+            ROMEO_URL: https://romeo.127.0.0.1.nip.io:10443
+            JULIET_URL: https://juliet.127.0.0.1.nip.io:19443
         ports:
             - "8061:8061"
         volumes:
             - .:/opt/certs:ro
 
-    romeo.com:
+    romeo.127.0.0.1.nip.io:
         image: nginx
-        container_name: romeo.com
+        container_name: romeo
         networks:
             - shakespeare
         ports:
@@ -28,9 +28,9 @@ services:
             - ./nginx/romeo-montague.conf:/etc/nginx/conf.d/default.conf
             - ./montague:/etc/ssl/certs/nginx
 
-    juliet.com:
+    juliet.127.0.0.1.nip.io:
         image: nginx
-        container_name: juliet.com
+        container_name: juliet
         networks:
             - shakespeare
         ports:

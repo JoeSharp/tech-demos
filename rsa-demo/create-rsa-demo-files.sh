@@ -53,13 +53,13 @@ openssl req \
 	-new -sha256 -days 1825 \
 	-out $TEMP_DIR/trustable-tom/trustable-tom.crt \
 	-keyout $TEMP_DIR/trustable-tom/trustable-tom.key \
-	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=trustable-tom.com"
+	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=trustable-tom.127.0.0.1.nip.io"
 
 echo "alice - Creating a Certificate Signing Request (CSR)"
 openssl req \
 	-new -key $TEMP_DIR/alice/alice.key \
 	-out $TEMP_DIR/alice/alice.csr \
-	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=alice.com"
+	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=alice.127.0.0.1.nip.io"
 
 echo "Trustable Tom - Constructing a Config for alice Cert"
 cat > $TEMP_DIR/alice/alice.ext << EOF
@@ -69,7 +69,7 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = alice.com
+DNS.2 = alice.127.0.0.1.nip.io
 IP.1 = 127.0.0.1
 EOF
 
@@ -88,7 +88,7 @@ echo "bob - Creating a Certificate Signing Request (CSR)"
 openssl req \
 	-new -key $TEMP_DIR/bob/bob.key \
 	-out $TEMP_DIR/bob/bob.csr \
-	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=bob.com"
+	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=bob.127.0.0.1.nip.io"
 
 echo "Trustable Tom - Constructing a Config for bob Cert"
 cat > $TEMP_DIR/bob/bob.ext << EOF
@@ -98,7 +98,7 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = bob.com
+DNS.2 = bob.127.0.0.1.nip.io
 IP.1 = 127.0.0.1
 EOF
 
@@ -113,7 +113,7 @@ openssl x509 \
 	-days 365 -sha256 \
 	-extfile $TEMP_DIR/bob/bob.ext
 
-echo "Generating Trusted Visitor for bob.com"
+echo "Generating Trusted Visitor for bob.127.0.0.1.nip.io"
 echo "charlie - Generating Key Pair"
 openssl genrsa -out $TEMP_DIR/charlie/charlie.key 4096
 openssl rsa -in $TEMP_DIR/charlie/charlie.key -pubout -out $TEMP_DIR/charlie/charlie.pub.key	
@@ -122,7 +122,7 @@ echo "charlie - Creating a Certificate Signing Request (CSR)"
 openssl req \
 	-new -key $TEMP_DIR/charlie/charlie.key \
 	-out $TEMP_DIR/charlie/charlie.csr \
-	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=charlie.com"
+	-subj "/C=GB/ST=London/L=London/O=ECORP/OU=Eng/CN=charlie.127.0.0.1.nip.io"
 
 echo "Trustable Tom - Constructing a Config for charlie Cert"
 cat > $TEMP_DIR/charlie/charlie.ext << EOF
@@ -132,7 +132,7 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = charlie.com
+DNS.2 = charlie.127.0.0.1.nip.io
 IP.1 = 127.0.0.1
 EOF
 

@@ -2,7 +2,7 @@ version: '3.3'
 services:
     bob:
         image: nginx
-        container_name: bob.com
+        container_name: bob
         ports:
             - "11443:443"
         volumes:
