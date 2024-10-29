@@ -1,6 +1,10 @@
 import React from 'react'
 
-import useComplexThing, { ComplexState } from './useComplexThing';
+import {useComplexThingValue, ComplexState, ComplexThingContext } from './useComplexThing';
+import CounterDisplay from './components/CounterDisplay';
+import CounterIncrementButton from './components/CounterIncrementButton';
+import PeopleTable from './components/PeopleTable';
+import AddNewPersonForm from './components/AddNewPersonForm';
 
 const INITIAL_STATE: ComplexState = {
   counter: 0,
@@ -11,40 +15,17 @@ const INITIAL_STATE: ComplexState = {
 };
 
 function App() {
-  const {state, incrementCounter, incrementAge, createNewAdult } = useComplexThing(INITIAL_STATE);
-  const [newName, setNewName] = React.useState('charlie');
+  // Create an instance of the API
+  const complexThingValue = useComplexThingValue(INITIAL_STATE);
 
-  const onNewNameChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(e => {
-    setNewName(e.target.value);
-  }, []);
-
-  return (<div>
-      <h1>Reducer Demo</h1>
-      <h2>Counter</h2>
-      <p>Value: {state.counter}</p>
-      <button onClick={incrementCounter}>Increment</button>
-
-      <h2>People</h2>
-      <table>
-        <thead>
-          <tr><th>Name</th><th>Age</th><th>Increment</th></tr>
-        </thead>
-        <tbody>
-          {state.people.map(person => (<tr key={person.name}>
-            <td>{person.name}</td>
-              <td>{person.age}</td>
-              <td><button onClick={() => incrementAge(person.name)}>Birthday!</button></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div>
-      <label>New Name</label>
-      <input type="text" value={newName} onChange={onNewNameChange} />
-      <button onClick={() => createNewAdult(newName)}>Add</button>
-      </div>
-    </div>
+  // Use the Provider to make it available to all children
+  return (<ComplexThingContext.Provider value={complexThingValue}>
+    <h1>Reducer Demo</h1>
+    <CounterDisplay />
+    <CounterIncrementButton />
+    <PeopleTable />
+    <AddNewPersonForm />
+  </ComplexThingContext.Provider>
   )
 }
 
