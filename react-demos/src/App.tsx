@@ -1,10 +1,6 @@
-import React from 'react'
-
 import {useComplexThingValue, ComplexState, ComplexThingContext } from './useComplexThing';
-import CounterDisplay from './components/CounterDisplay';
-import CounterIncrementButton from './components/CounterIncrementButton';
-import PeopleTable from './components/PeopleTable';
-import AddNewPersonForm from './components/AddNewPersonForm';
+import PersonManager from './components/PersonManager';
+import CounterManager from './components/CounterManager';
 
 const INITIAL_STATE: ComplexState = {
   counter: 0,
@@ -21,10 +17,8 @@ function App() {
   // Use the Provider to make it available to all children
   return (<ComplexThingContext.Provider value={complexThingValue}>
     <h1>Reducer Demo</h1>
-    <CounterDisplay />
-    <CounterIncrementButton />
-    <PeopleTable />
-    <AddNewPersonForm />
+    <CounterManager />
+    <PersonManager />
   </ComplexThingContext.Provider>
   )
 }
