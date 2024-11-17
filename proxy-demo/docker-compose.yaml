@@ -1,0 +1,41 @@
+version: '3.3'
+services:
+    nginx-http-proxy:
+        image: nginx
+        profiles: 
+            - 'nginx'
+        container_name: nginx-http-proxy
+        networks:
+            - ratrace
+        ports:
+            - "3129:3129"
+        volumes:
+            - ./nginx-http-proxy/nginx-http-proxy.conf:/etc/nginx/conf.d/default.conf
+
+    squid:
+        image: sameersbn/squid:3.5.27-2
+        container_name: squid
+        networks:
+            - ratrace
+        ports:
+            - "3128:3128"
+        volumes:
+            - ./cache:/var/spool/squid
+            #- ./squid/squid.conf:/etc/squid/squid.conf
+        restart: always
+        
+    ratracejoe:
+        image: nginx
+        container_name: ratracejoe
+        networks:
+            - ratrace
+        ports:
+            - "8080:80"
+        volumes:
+            - ./local-website/ratracejoe.html:/usr/share/nginx/html/index.html
+            - ./local-website/ratracejoe.conf:/etc/nginx/conf.d/default.conf
+            #- ./montague:/etc/ssl/certs/nginx
+
+networks:
+    ratrace:
+        driver: bridge
