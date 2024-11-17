@@ -44,7 +44,7 @@ tail -f /var/logs/access.log
 ```
 
 Then in your browser just visit
-http://localhost:9090/ratracejo
+http://localhost:9080/ratracejoe
 
 And it should pull up the 'website', but go via the proxy.
 
@@ -53,3 +53,9 @@ To use curl, try this
 curl --proxy localhost:3128 http://localhost:8080
 ```
 And again, it should pull back the server running in docker, via the proxy you have running in your VM.
+
+To see HTTPS in action, try
+
+http://localhost:9080/external
+
+It should try and pull the BBC homepage via HTTPS, but via the proxy...the logs seem to come through a little sporadically, but I think it worked...

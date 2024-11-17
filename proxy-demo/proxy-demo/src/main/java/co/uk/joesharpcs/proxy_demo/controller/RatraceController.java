@@ -15,6 +15,8 @@ public class RatraceController {
 
     private static final String RATRACEJOE_URL =
             "http://localhost:8080/";
+    private static final String EXTERNAL_DEMO_URL =
+            "https://www.bbc.co.uk/news";
     private static final String PROXY_HOST = "localhost";
     private static final int PROXY_PORT = 3128;
 
@@ -40,6 +42,12 @@ public class RatraceController {
     @GetMapping("/ratracejoe")
     public String getRatraceJoe() {
         return restClient.get().uri(RATRACEJOE_URL)
+                .retrieve().body(String.class);
+    }
+
+    @GetMapping("/external")
+    public String getExternal() {
+        return restClient.get().uri(EXTERNAL_DEMO_URL)
                 .retrieve().body(String.class);
     }
 }
