@@ -6,12 +6,13 @@ import { useMyContext } from "../myContext";
 
 function CounterManager() {
 
-  const { anotherFunction } = useComplexThing()
-  const { func } = useMyContext();
+  const { changeStateSomehow } = useComplexThing()
+  const { func2 } = useMyContext();
 
   useEffect(() => {
-    anotherFunction(func)
-  }, [anotherFunction, func])
+    // add the message handler to the socket service to handle incoming ws messages:
+    func2(changeStateSomehow)
+  }, [changeStateSomehow, func2]);
 
   return (<div>
     <h3>Counter Manager</h3>

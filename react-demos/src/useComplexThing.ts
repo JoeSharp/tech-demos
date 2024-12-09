@@ -40,8 +40,12 @@ interface HandleMyFunction extends IAction {
   type: 'handleMyFunction',
   myFunction: (message: string) => void,
 }
+interface ChangeStateSomehow extends IAction {
+  type: 'changeStateSomehow',
+  data: string
+}
 
-type Action = IncrementAge | IncrementCounter | CreateNewAdult | RemovePerson | HandleMyFunction;
+type Action = IncrementAge | IncrementCounter | CreateNewAdult | RemovePerson | HandleMyFunction | ChangeStateSomehow;
 
 function reducer(state: ComplexState, action: Action): ComplexState {
   switch(action.type) {
@@ -76,6 +80,14 @@ function reducer(state: ComplexState, action: Action): ComplexState {
       action.myFunction("you are calling this from the complexThing context");
       return state;
     }
+    case 'changeStateSomehow': {
+      console.log(action.data)
+      // update state with data
+
+      return {
+        ...state,
+      }
+    }
   }
 }
 
@@ -90,6 +102,7 @@ export interface UseComplexThing {
   createNewAdult: (name: string) => void;
   removePerson: (name: string) => void;
   anotherFunction: (myFunction: (message: string) => void) => void;
+  changeStateSomehow: (data: string) => void;
 }
 
 /**
@@ -105,6 +118,7 @@ export function useComplexThingValue(defaultState: ComplexState): UseComplexThin
   const createNewAdult = React.useCallback((name: string) => dispatch({type: 'createNewAdult', name}), []);
   const removePerson = React.useCallback((name: string) => dispatch({type: 'removePerson', name}), []);
   const anotherFunction = React.useCallback((myFunction: (message: string) => void) => dispatch({type: 'handleMyFunction', myFunction}), []);
+  const changeStateSomehow = React.useCallback((data: string) => dispatch({type: "changeStateSomehow", data}), []);
 
   return {
     state,
@@ -112,7 +126,8 @@ export function useComplexThingValue(defaultState: ComplexState): UseComplexThin
     incrementAge,
     createNewAdult,
     removePerson,
-    anotherFunction
+    anotherFunction,
+    changeStateSomehow
   }
 }
 
@@ -126,6 +141,7 @@ export const ComplexThingContext = React.createContext<UseComplexThing>({
   createNewAdult: () => console.error('Not implemented in default value'),
   removePerson: () => console.error('Not implemented in default value'),
   anotherFunction: () => console.error('Not yet'),
+  changeStateSomehow: () => console.error("not yet either")
 });
 
 /**

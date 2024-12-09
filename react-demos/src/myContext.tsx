@@ -2,22 +2,33 @@ import React, { createContext, useContext, ReactNode } from "react";
 
 interface MyContextValue {
     func: (message: string) => void;
+    func2: (fn: (m: string) => void) => void;
 }
 
 function useMyContextValue(): MyContextValue {
-    let savedMessage: string = "";
+    // let ws = new WebSocket()
 
+    const handlers: Array<(m: string) => void> = [];
 
-    // use this function to update a variable in the contextValue
-    // in reality, this type of function is being used to add message handlers to a socket service,
-    // with the websocket object held in the MyContextValue object.
     function func(message: string): void {
-        savedMessage = message
-        console.log(savedMessage);
+        // "send" the message - in reality over websocket, the reference for which is kept within this function
+        // ws.send(message)
+        console.log(message);
     }
+
+    function func2(fn: (m: string) => void) {
+        handlers.push(fn)
+    }
+    
+    // something like this to call each handler:
+
+    // ws.onmessage = (e) => {
+    //     handlers.forEach(fn => fn(e.data))
+    // }
 
     return {
         func,
+        func2,
     };
 }
 
