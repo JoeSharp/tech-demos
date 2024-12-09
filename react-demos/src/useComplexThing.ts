@@ -36,8 +36,12 @@ interface RemovePerson extends IAction {
   type: 'removePerson',
   name: string
 }
+interface HandleMyFunction extends IAction {
+  type: 'handleMyFunction',
+  myFunction: (message: string) => void,
+}
 
-type Action = IncrementAge | IncrementCounter | CreateNewAdult | RemovePerson;
+type Action = IncrementAge | IncrementCounter | CreateNewAdult | RemovePerson | HandleMyFunction;
 
 function reducer(state: ComplexState, action: Action): ComplexState {
   switch(action.type) {
@@ -68,6 +72,10 @@ function reducer(state: ComplexState, action: Action): ComplexState {
         people: state.people.filter(p => p.name !== action.name)
       }
     }
+    case 'handleMyFunction': {
+      action.myFunction("you are calling this from the complexThing context");
+      return state;
+    }
   }
 }
 
@@ -81,6 +89,7 @@ export interface UseComplexThing {
   incrementAge: (name: string) => void;
   createNewAdult: (name: string) => void;
   removePerson: (name: string) => void;
+  anotherFunction: (myFunction: (message: string) => void) => void;
 }
 
 /**
@@ -95,13 +104,15 @@ export function useComplexThingValue(defaultState: ComplexState): UseComplexThin
   const incrementAge = React.useCallback((name: string) => dispatch({type: 'incrementAge', name}), []);
   const createNewAdult = React.useCallback((name: string) => dispatch({type: 'createNewAdult', name}), []);
   const removePerson = React.useCallback((name: string) => dispatch({type: 'removePerson', name}), []);
+  const anotherFunction = React.useCallback((myFunction: (message: string) => void) => dispatch({type: 'handleMyFunction', myFunction}), []);
 
   return {
     state,
     incrementCounter,
     incrementAge,
     createNewAdult,
-    removePerson
+    removePerson,
+    anotherFunction
   }
 }
 
@@ -113,7 +124,8 @@ export const ComplexThingContext = React.createContext<UseComplexThing>({
   incrementAge: () => console.error('Not implemented in default value'),
   incrementCounter: () => console.error('Not implemented in default value'),
   createNewAdult: () => console.error('Not implemented in default value'),
-  removePerson: () => console.error('Not implemented in default value')
+  removePerson: () => console.error('Not implemented in default value'),
+  anotherFunction: () => console.error('Not yet'),
 });
 
 /**
