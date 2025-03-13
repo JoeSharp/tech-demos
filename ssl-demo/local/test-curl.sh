@@ -2,9 +2,9 @@ LGREEN='\033[1;32m'
 LRED='\033[0;31m'
 NC='\033[0m' # No Color
 
-APP_HOST=tybalt.${LOCAL_STACK}.nip.io:8061
-CAPULET_HOST=juliet.${LOCAL_STACK}.nip.io:19443
-MONTAGUE_HOST=romeo.${LOCAL_STACK}.nip.io:10443
+APP_HOST=tybalt.${LOCAL_STACK_HOST}.nip.io:8061
+CAPULET_HOST=juliet.${LOCAL_STACK_HOST}.nip.io:19443
+MONTAGUE_HOST=romeo.${LOCAL_STACK_HOST}.nip.io:10443
 
 echo "${LGREEN}Requesting Capulet from SSL Demo${NC}"
 curl \

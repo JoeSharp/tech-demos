@@ -1,15 +1,17 @@
 export LOCAL_STACK_CIDR=172.18.5.0/24
-export LOCAL_STACK=172.18.5.1
+# This is assuming that the host gets allocated an IP within the Docker network
+# Tested on Ubuntu, but not yet tested on Mac or Windows
+export LOCAL_STACK_HOST=172.18.5.1
 
 docker-run-quick:
 	docker compose -f local/docker-compose.yaml --profile include-app up -d --wait
 
-docker-run: local-stack docker-build docker-run-quick
+docker-run: docker-build docker-run-quick
 
 docker-stop:
 	docker compose -f local/docker-compose.yaml --profile include-app down
 
-nginx-run: local-stack
+nginx-run: 
 	docker compose -f local/docker-compose.yaml up -d --wait
 
 bootrun: run-nginx
@@ -27,7 +29,7 @@ refresh-certs:
 	./create-montague-ssl-files.sh && \
 	cd ..
 
-test-curl: local-stack
+test-curl: 
 	cd local && \
  	./test-curl.sh \
 	cd ..

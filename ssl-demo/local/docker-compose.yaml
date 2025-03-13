@@ -9,8 +9,8 @@ services:
             - include-app
         environment:
             CERTS_DIR: /opt/certs
-            ROMEO_URL: https://romeo.${LOCAL_STACK}.nip.io:10443
-            JULIET_URL: https://juliet.${LOCAL_STACK}.nip.io:19443
+            ROMEO_URL: https://romeo.${LOCAL_STACK_HOST}.nip.io:10443
+            JULIET_URL: https://juliet.${LOCAL_STACK_HOST}.nip.io:19443
         ports:
             - "8061:8061"
         volumes:
