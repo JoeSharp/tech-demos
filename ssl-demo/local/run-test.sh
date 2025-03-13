@@ -2,9 +2,9 @@ LGREEN='\033[1;32m'
 LRED='\033[0;31m'
 NC='\033[0m' # No Color
 
-APP_HOST=localhost:8061
-CAPULET_HOST=localhost:19443
-MONTAGUE_HOST=localhost:10443
+APP_HOST=${LOCAL_STACK}:8061
+CAPULET_HOST=${LOCAL_STACK}:19443
+MONTAGUE_HOST=${LOCAL_STACK}:10443
 
 echo "${LGREEN}Requesting Capulet from SSL Demo${NC}"
 curl \

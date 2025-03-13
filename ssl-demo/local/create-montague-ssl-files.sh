@@ -27,7 +27,7 @@ echo "Create Romeo CSR"
 openssl req \
 -new -key montague/romeo/romeo.key \
 -out montague/romeo/romeo.csr \
--subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=romeo.127.0.0.1.nip.io"
+-subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=romeo.${LOCAL_STACK}.nip.io"
 
 echo "Generating Romeo EXT file"
 cat > montague/romeo/romeo.ext << EOF
@@ -37,8 +37,8 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = romeo.127.0.0.1.nip.io
-IP.1 = 127.0.0.1
+DNS.2 = romeo.${LOCAL_STACK}.nip.io
+IP.1 = ${LOCAL_STACK}
 EOF
 
 echo "Signing Romeo Certificate"
@@ -86,7 +86,7 @@ echo "Create Tybalt CSR"
 openssl req \
 -new -key montague/tybalt/tybalt.key \
 -out montague/tybalt/tybalt.csr \
--subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=tybalt.127.0.0.1.nip.io"
+-subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=tybalt.${LOCAL_STACK}.nip.io"
 
 echo "Generating Tybalt Ext File"
 cat > montague/tybalt/tybalt.ext << EOF
@@ -96,8 +96,8 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = tybalt.127.0.0.1.nip.io
-IP.1 = 127.0.0.1
+DNS.2 = tybalt.${LOCAL_STACK}.nip.io
+IP.1 = ${LOCAL_STACK}
 EOF
 
 echo "Signing Tybalt Certificate"

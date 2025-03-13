@@ -28,7 +28,7 @@ echo "Create Juliet CSR"
 openssl req \
 -new -key capulet/juliet/juliet.key \
 -out capulet/juliet/juliet.csr \
--subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=juliet.127.0.0.1.nip.io"
+-subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=juliet.${LOCAL_STACK}.nip.io"
 
 echo "Generating Juliet CSR"
 cat > capulet/juliet/juliet.ext << EOF
@@ -38,8 +38,8 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = juliet.127.0.0.1.nip.io
-IP.1 = 127.0.0.1
+DNS.2 = juliet.${LOCAL_STACK}.nip.io
+IP.1 = ${LOCAL_STACK}
 EOF
 
 echo "Signing Juliet Certificate"
@@ -86,7 +86,7 @@ echo "Create Capulet Nurse CSR"
 openssl req \
 -new -key capulet/the-nurse/the-nurse.key \
 -out capulet/the-nurse/the-nurse.csr \
--subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=the-nurse.127.0.0.1.nip.io"
+-subj "/C=GB/ST=London/L=London/O=ratracejoe/OU=BX/CN=the-nurse.${LOCAL_STACK}.nip.io"
 
 echo "Generating Capulet Nurse Ext File"
 cat > capulet/the-nurse/the-nurse.ext << EOF
@@ -96,8 +96,8 @@ keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-DNS.2 = the-nurse.127.0.0.1.nip.io
-IP.1 = 127.0.0.1
+DNS.2 = the-nurse.${LOCAL_STACK}.nip.io
+IP.1 = ${LOCAL_STACK}
 EOF
 
 echo "Signing Capulet Nurse Certificate"
