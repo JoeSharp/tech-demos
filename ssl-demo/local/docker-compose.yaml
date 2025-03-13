@@ -12,7 +12,7 @@ services:
             ROMEO_URL: https://romeo.${LOCAL_STACK}.nip.io:10443
             JULIET_URL: https://juliet.${LOCAL_STACK}.nip.io:19443
         ports:
-            - "${LOCAL_STACK}:8061:8061"
+            - "8061:8061"
         volumes:
             - .:/opt/certs:ro
 
@@ -22,7 +22,7 @@ services:
         networks:
             - shakespeare
         ports:
-            - "${LOCAL_STACK}:10443:443"
+            - "10443:443"
         volumes:
             - ./nginx/romeo-montague.html:/usr/share/nginx/html/index.html
             - ./nginx/romeo-montague.conf:/etc/nginx/conf.d/default.conf
@@ -34,7 +34,7 @@ services:
         networks:
             - shakespeare
         ports:
-            - "${LOCAL_STACK}:19443:443"
+            - "19443:443"
         volumes:
             - ./nginx/juliet-capulet.html:/usr/share/nginx/html/index.html
             - ./nginx/juliet-capulet.conf:/etc/nginx/conf.d/default.conf
@@ -43,3 +43,6 @@ services:
 networks:
     shakespeare:
         driver: bridge
+        ipam:
+          config:
+            - subnet: ${LOCAL_STACK_CIDR}

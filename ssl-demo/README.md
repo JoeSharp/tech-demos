@@ -16,23 +16,23 @@ This project will demonstrate the following
 The Makefile provides the means to run the application up.
 
 ```bash
-make run-docker
+make docker-run
 ```
 
 If you wish to run the application outside of Docker, you can use the following
 ```bash
-make run-bootrun
+make bootrun
 ```
 
 or use the following, and then run ./gradle bootrun yourself.
 
 ```bash
-make run-nginx
+make nginx-run
 ```
 
 Once the application is running, you can test it with this target.
 ```bash
-make run-test
+make test-curl
 ```
 
 ## Testing via Firefox
@@ -75,7 +75,7 @@ To run the tests, you can use the usual gradle task
 The following command can be used to regenerate all the certs and keys
 
 ```bash
-make run-test
+make refresh-certs
 ```
 
 Note that if you do this, anything imported into Firefox will now be invalid.
